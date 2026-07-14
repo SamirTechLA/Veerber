@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coniugiamo! - Italian Verb Trainer</title>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-theme="light">
+
+  <div class="app-container">
+    
+    <!-- App Header -->
+    <header class="app-header glass-panel">
+      <div class="logo">
+        <div class="logo-icon">🇮🇹</div>
+        <h1 class="logo-text">Coniugiamo!</h1>
+      </div>
+      
+      <div class="header-controls">
+        <!-- Streak pill -->
+        <div class="stat-pill streak" title="Giorni consecutivi di studio (Daily Streak)">
+          <i class="fa-solid fa-fire"></i>
+          <span id="header-streak">0</span>
+        </div>
+        
+        <!-- XP pill -->
+        <div class="stat-pill xp" title="Punti Esperienza totali (Total XP)">
+          <i class="fa-solid fa-star"></i>
+          <span id="header-xp">0</span> XP
+          <span class="level-badge" id="header-level">Lvl 1</span>
+        </div>
+
+        <!-- Language selector dropdown -->
+        <select id="header-lang-select" class="glass-panel" style="padding: 6px 12px; border-radius: 99px; font-weight: 700; border: 1px solid var(--border-color); color: var(--text-main); background: var(--bg-card); cursor:pointer; font-family: var(--font-family-display);">
+          <option value="it">🇮🇹 IT</option>
+          <option value="de">🇩🇪 DE</option>
+        </select>
+
+        <!-- Sound FX toggle -->
+        <button class="btn-icon" id="btn-toggle-sound" title="Attiva/Disattiva Suono">
+          <i class="fa-solid fa-volume-high"></i>
+        </button>
+
+        <!-- Light/Dark theme toggle -->
+        <button class="btn-icon" id="btn-toggle-theme" title="Cambia Tema">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- MAIN VIEW: DASHBOARD -->
+    <main class="view active" id="view-dashboard">
+      <div class="dashboard-grid">
+        
+        <!-- Game Configuration Panel -->
+        <section class="glass-panel dashboard-panel">
+          <h2 class="panel-title">
+            <i class="fa-solid fa-sliders"></i> Configura Studio
+          </h2>
+          
+          <div class="welcome-box">
+            <h3 id="welcome-title">Ciao, Studente!</h3>
+            <p>Seleziona i verbi e i tempi che desideri esercitare, quindi scegli una modalità di studio.</p>
+          </div>
+
+          <!-- Verb type filters -->
+          <div class="setup-group">
+            <span class="setup-label">Tipologia Verbi (Verb Type)</span>
+            <div class="tag-selector" id="filter-type">
+              <button class="tag-btn selected" data-type="all">Tutti</button>
+              <button class="tag-btn" data-type="regular">Regolari</button>
+              <button class="tag-btn" data-type="irregular">Irregolari</button>
+            </div>
+          </div>
+
+          <!-- Verb conjugation group filters -->
+          <div class="setup-group">
+            <span class="setup-label">Coniugazione (Ending Group)</span>
+            <div class="tag-selector" id="filter-group">
+              <button class="tag-btn selected" data-group="all">Tutte</button>
+              <button class="tag-btn" data-group="are">-are</button>
+              <button class="tag-btn" data-group="ere">-ere</button>
+              <button class="tag-btn" data-group="ire">-ire</button>
+            </div>
+          </div>
+
+          <!-- Tense checklist selection -->
+          <div class="setup-group">
+            <span class="setup-label">Tempi Verbali (Tenses - Select at least one)</span>
+            <div class="tag-selector" id="filter-tenses">
+              <button class="tag-btn selected" data-tense="presente">Presente</button>
+              <button class="tag-btn" data-tense="passato_prossimo">Passato Prossimo</button>
+              <button class="tag-btn" data-tense="imperfetto">Imperfetto</button>
+              <button class="tag-btn" data-tense="futuro">Futuro</button>
+            </div>
+          </div>
+
+          <!-- Verb Pool selection -->
+          <div class="setup-group">
+            <span class="setup-label">Bacino di Verbi (Verb Pool)</span>
+            <div class="tag-selector" id="filter-pool">
+              <button class="tag-btn selected" data-pool="all">Tutti i verbi</button>
+              <button class="tag-btn" data-pool="struggle">Verbi difficili (<span id="tag-struggle-count">0</span>)</button>
+              <button class="tag-btn" data-pool="bookmarks">Preferiti (<span id="tag-bookmark-count">0</span>)</button>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="actions-block">
+            <button class="btn-primary" id="btn-start-quiz">
+              <i class="fa-solid fa-graduation-cap"></i> Avvia Quiz
+            </button>
+            <button class="btn-secondary" id="btn-start-flashcards">
+              <i class="fa-solid fa-layer-group"></i> Flashcards
+            </button>
+          </div>
+          
+          <button class="btn-primary" id="btn-start-sentences" style="width:100%; margin-top: 12px; background: var(--accent-blue);">
+            <i class="fa-solid fa-pen-to-square"></i> Completa Frasi
+          </button>
+          
+          <button class="btn-secondary" id="btn-go-explorer" style="width:100%; margin-top: 12px;">
+            <i class="fa-solid fa-book-open"></i> Esplora Coniugazioni (Verb Dictionary)
+          </button>
+        </section>
+
+        <!-- Right Side: Stats & Level Progress -->
+        <aside class="glass-panel dashboard-panel" style="display:flex; flex-direction:column; gap:20px;">
+          <h2 class="panel-title">
+            <i class="fa-solid fa-chart-line"></i> I tuoi Progressi
+          </h2>
+
+          <div class="stats-list">
+            <div class="glass-panel stat-card">
+              <span class="stat-value" id="stat-xp">0</span>
+              <span class="stat-label">XP totali</span>
+            </div>
+            
+            <div class="glass-panel stat-card">
+              <span class="stat-value" id="stat-streak">0</span>
+              <span class="stat-label">Streak (Giorni)</span>
+            </div>
+
+            <div class="glass-panel stat-card">
+              <span class="stat-value" id="stat-accuracy">0%</span>
+              <span class="stat-label">Precisione</span>
+            </div>
+            
+            <div class="glass-panel stat-card">
+              <span class="stat-value" id="stat-attempts">0</span>
+              <span class="stat-label">Esercizi fatti</span>
+            </div>
+
+            <!-- XP progress track -->
+            <div class="xp-progress-bar-container">
+              <div class="progress-label-wrap">
+                <span id="level-label-current">Livello 1</span>
+                <span id="level-label-next">Livello 2</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" id="xp-progress-fill"></div>
+              </div>
+              <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; text-align: center;" id="xp-to-next">
+                Raggiungi 200 XP per salire di livello
+              </p>
+            </div>
+          </div>
+
+          <!-- Struggle/Tricky verbs list -->
+          <div class="glass-panel struggle-panel" id="struggle-panel" style="display:none;">
+            <h3 style="font-size: 1rem; color: var(--text-main); margin-bottom: 8px;">
+              ⚠️ Verbi ostici (Struggling Verbs)
+            </h3>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">
+              Questi verbi hanno una precisione inferiore al 70%. Esercitati di più!
+            </p>
+            <div class="struggle-list" id="struggle-container">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+          
+          <!-- Gemini AI Settings Panel -->
+          <div class="glass-panel struggle-panel" style="display:flex; flex-direction:column; gap:10px; padding:16px;">
+            <h3 style="font-size: 1rem; color: var(--text-main); margin-bottom: 4px;">
+              🤖 Intelligenza Artificiale
+            </h3>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 2px;">
+              Genera frasi infinite in tempo reale collegando la chiave API gratuita di Gemini.
+            </p>
+            
+            <div style="position:relative; display:flex; align-items:center; width:100%;">
+              <input type="password" id="input-api-key" placeholder="Incolla chiave API Gemini..." style="width:100%; padding: 8px 36px 8px 12px; font-size:0.85rem; border-radius:6px; border:1px solid var(--border-color); background:rgba(0,0,0,0.02); color:var(--text-main); outline:none;">
+              <button id="btn-toggle-key-visibility" style="position:absolute; right:8px; background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:0.9rem;">
+                <i class="fa-solid fa-eye-slash"></i>
+              </button>
+            </div>
+
+            <div style="display:flex; gap:8px;">
+              <button class="btn-secondary" id="btn-save-api-key" style="flex:1; padding: 6px 12px; font-size:0.8rem; border-radius:6px; font-family:inherit;">
+                Salva e Verifica
+              </button>
+              <button class="btn-secondary" id="btn-clear-api-key" style="padding: 6px 10px; font-size:0.8rem; border-radius:6px; border-color:var(--error); color:var(--error);">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.8rem; margin-top:2px;">
+              <span>Stato: <strong id="api-key-status" style="color:var(--text-muted);">Non inserita</strong></span>
+              <a href="https://aistudio.google.com/" target="_blank" style="color:var(--accent-blue); text-decoration:underline;">Ottieni chiave gratis</a>
+            </div>
+          </div>
+
+          <button class="btn-secondary" id="btn-reset-data" style="margin-top:auto; font-size:0.8rem; padding: 8px 12px; align-self:center; opacity:0.6;">
+            <i class="fa-solid fa-trash-can"></i> Resetta Dati
+          </button>
+        </aside>
+
+      </div>
+    </main>
+
+    <!-- DRILL (QUIZ) VIEW -->
+    <section class="view" id="view-drill">
+      <div class="session-header glass-panel" style="padding:16px;">
+        <button class="btn-icon" id="btn-exit-drill" title="Torna alla Dashboard">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+        
+        <div class="session-progress">
+          <div class="session-progress-fill" id="drill-progress-fill"></div>
+        </div>
+        
+        <div style="font-weight:700;" id="drill-counter">
+          Domanda 1 / 10
+        </div>
+      </div>
+
+      <div class="glass-panel drill-card" style="position:relative;">
+        <!-- Loading overlay for Gemini API requests -->
+        <div id="drill-loading-overlay" style="position:absolute; top:0; left:0; width:100%; height:100%; background:var(--bg-card); backdrop-filter:var(--backdrop-blur); display:none; flex-direction:column; align-items:center; justify-content:center; gap:16px; z-index:100; border-radius:var(--radius-lg);">
+          <div class="spinner" style="width:40px; height:40px; border:4px solid var(--border-color); border-top-color:var(--primary); border-radius:50%; animation:spin 1s linear infinite;"></div>
+          <p style="font-weight:600; color:var(--text-main);" id="loading-overlay-text">Generazione frasi con Gemini...</p>
+        </div>
+
+        <!-- Floating XP popup container -->
+        <div id="floaty-xp-container"></div>
+
+        <h2 class="drill-verb" id="drill-inf">parlare</h2>
+        <p class="drill-translation" id="drill-trans">to speak, to talk</p>
+
+        <div class="drill-meta">
+          <span class="drill-badge tense" id="drill-tense-badge">Presente</span>
+          <span class="drill-badge pronoun" id="drill-pronoun-badge">io</span>
+        </div>
+
+        <div class="drill-input-wrapper">
+          <input type="text" class="drill-input" id="drill-text-input" placeholder="Scrivi la coniugazione..." autocomplete="off" spellcheck="false">
+          
+          <!-- Quick Character Accents Row -->
+          <div class="accent-row">
+            <button class="btn-accent">à</button>
+            <button class="btn-accent">è</button>
+            <button class="btn-accent">é</button>
+            <button class="btn-accent">ì</button>
+            <button class="btn-accent">ò</button>
+            <button class="btn-accent">ù</button>
+          </div>
+        </div>
+
+        <button class="btn-primary" id="btn-submit-drill" style="max-width: 400px; width: 100%; margin: 0 auto;">
+          Invia Risposta
+        </button>
+
+        <!-- Feedback section -->
+        <div class="drill-feedback" id="drill-feedback">
+          <div class="feedback-headline" id="feedback-headline">
+            <i class="fa-solid fa-circle-check"></i> Bravissimo!
+          </div>
+          <div class="feedback-details" id="feedback-details">
+            La risposta corretta è <strong>parlo</strong>.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FLASHCARDS VIEW -->
+    <section class="view" id="view-flashcards">
+      <div class="session-header glass-panel" style="padding:16px; margin-bottom:12px;">
+        <button class="btn-icon" id="btn-exit-flashcards" title="Torna alla Dashboard">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+        
+        <div style="font-weight:700;" id="flashcards-counter">
+          Card 1 / 10
+        </div>
+      </div>
+
+      <div class="flashcard-view-wrapper">
+        <div class="flashcard-3d" id="flashcard-element">
+          
+          <!-- Front of Card -->
+          <div class="card-face front">
+            <h2 id="card-inf">parlare</h2>
+            <p id="card-trans">to speak, to talk</p>
+            <div class="drill-badge tense" id="card-tense">Presente</div>
+            <div class="flip-hint" style="margin-top:40px;">
+              <i class="fa-solid fa-rotate-left"></i> Clicca per girare
+            </div>
+          </div>
+          
+          <!-- Back of Card -->
+          <div class="card-face back">
+            <h3 class="card-back-title">parlare</h3>
+            <p style="font-style:italic; color: var(--text-muted); font-size:0.9rem;" id="card-back-tense-title">Presente (Present)</p>
+            
+            <div class="conjugation-mini-grid" id="card-back-conjugations">
+              <!-- Dynamically populated -->
+            </div>
+            
+            <div class="flip-hint" style="margin-top:auto; font-size: 0.8rem; color: var(--text-muted);">
+              Clicca di nuovo per vedere la traduzione
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="flashcard-actions">
+        <button class="btn-secondary" id="btn-flash-fail" style="border-color: var(--error); color: var(--error);">
+          <i class="fa-solid fa-xmark"></i> Non la sapevo
+        </button>
+        <button class="btn-primary" id="btn-flash-success" style="background: var(--success); box-shadow: 0 4px 12px var(--success-glow);">
+          <i class="fa-solid fa-check"></i> Lo sapevo! (+10 XP)
+        </button>
+      </div>
+    </section>
+
+    <!-- EXPLORER (DICTIONARY) VIEW -->
+    <section class="view" id="view-explorer">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <button class="btn-secondary" id="btn-exit-explorer">
+          <i class="fa-solid fa-arrow-left"></i> Dashboard
+        </button>
+        <h2 style="font-size:1.5rem; font-family: var(--font-family-display);">Esplora Verbi Italiani</h2>
+      </div>
+
+      <!-- Search bar -->
+      <div class="explorer-search-row">
+        <div class="search-input-wrap">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" class="search-input" id="explorer-search" placeholder="Cerca verbo per infinito o traduzione (e.g., fare, work)...">
+        </div>
+        
+        <select id="explorer-filter-group" class="glass-panel" style="padding: 0 16px; border-radius: var(--radius-md); border:1px solid var(--border-color); color:var(--text-main); background:var(--bg-card);">
+          <option value="all">Tutte le coniugazioni</option>
+          <option value="are">-are</option>
+          <option value="ere">-ere</option>
+          <option value="ire">-ire</option>
+        </select>
+      </div>
+
+      <!-- Two-column view -->
+      <div class="explorer-columns">
+        
+        <!-- Left: list of verbs -->
+        <div class="glass-panel verb-list-panel" id="explorer-verb-list">
+          <!-- Dynamically populated -->
+        </div>
+
+        <!-- Right: Verb conjugation tables -->
+        <div class="glass-panel verb-detail-panel" id="explorer-verb-details">
+          <!-- Dynamic details -->
+          <div class="empty-state">
+            <i class="fa-solid fa-book-open"></i>
+            <p>Seleziona un verbo dalla lista a sinistra per visualizzare le tabelle di coniugazione complete.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Main scripts -->
+  <script src="js/verbs.js"></script>
+  <script src="js/verbs_de.js"></script>
+  <script src="js/sentences.js"></script>
+  <script src="js/sentences_de.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/particles.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
