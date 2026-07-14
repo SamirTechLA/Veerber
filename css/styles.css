@@ -144,19 +144,14 @@ a {
   gap: 12px;
 }
 
-.logo-icon {
+.logo-img {
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  background: linear-gradient(135deg, hsl(120, 45%, 45%), #fff 50%, hsl(355, 75%, 45%));
   box-shadow: var(--shadow-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  color: #1e293b;
-  font-size: 1.2rem;
-  border: 2px solid rgba(255,255,255,0.4);
+  object-fit: cover;
+  border: 2px solid var(--border-color);
+  background: var(--bg-card);
 }
 
 .logo-text {
