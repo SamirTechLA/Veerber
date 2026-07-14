@@ -1,10 +1,10 @@
 /**
- * Coniugiamo! - Local Storage & Progress Tracking Manager
+ * Veerber - Local Storage & Progress Tracking Manager
  */
 
 const StorageManager = {
   currentLang: "it",
-  STORAGE_KEY: "coniugiamo_user_progress_it",
+  STORAGE_KEY: "veerber_user_progress_it",
   
   // Default structure
   defaultState: {
@@ -22,7 +22,7 @@ const StorageManager = {
 
   init(lang = "it") {
     this.currentLang = lang;
-    this.STORAGE_KEY = `coniugiamo_user_progress_${lang}`;
+    this.STORAGE_KEY = `veerber_user_progress_${lang}`;
     this.state = JSON.parse(JSON.stringify(this.defaultState));
 
     const data = localStorage.getItem(this.STORAGE_KEY);
@@ -38,7 +38,7 @@ const StorageManager = {
 
     // Sync API key across languages for user convenience
     if (lang === "de") {
-      const itData = localStorage.getItem("coniugiamo_user_progress_it");
+      const itData = localStorage.getItem("veerber_user_progress_it");
       if (itData) {
         try {
           const itParsed = JSON.parse(itData);
@@ -46,7 +46,7 @@ const StorageManager = {
         } catch(e){}
       }
     } else if (lang === "it") {
-      const deData = localStorage.getItem("coniugiamo_user_progress_de");
+      const deData = localStorage.getItem("veerber_user_progress_de");
       if (deData) {
         try {
           const deParsed = JSON.parse(deData);

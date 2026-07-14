@@ -82,7 +82,7 @@ socketserver.TCPServer.allow_reuse_address = True
 print(f"Starting server on port {PORT} in {DIRECTORY}...")
 try:
     with socketserver.TCPServer(("", PORT), CustomHandler) as httpd:
-        print(f"Serving Coniugiamo at http://localhost:{PORT}")
+        print(f"Serving Veerber at http://localhost:{PORT}")
         print(f"Press Ctrl+C to terminate.")
         httpd.serve_forever()
 except Exception as e:

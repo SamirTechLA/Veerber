@@ -1,5 +1,5 @@
 /**
- * Coniugiamo! - Main App Logic & View Controller
+ * Veerber - Main App Logic & View Controller
  */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -57,16 +57,16 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initialization
     init() {
       // Load settings
-      const savedTheme = localStorage.getItem("coniugiamo_theme") || "light";
+      const savedTheme = localStorage.getItem("veerber_theme") || "light";
       this.setTheme(savedTheme);
       
-      const savedSound = localStorage.getItem("coniugiamo_sound");
+      const savedSound = localStorage.getItem("veerber_sound");
       this.sound = savedSound === null ? true : savedSound === "true";
       this.updateSoundIcon();
 
       // Load data & stats
             // Load saved language
-      const savedLang = localStorage.getItem("coniugiamo_lang") || "it";
+      const savedLang = localStorage.getItem("veerber_lang") || "it";
       this.setLanguage(savedLang);
 
       // Load saved API Key status
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Async sync API key from server
       this.syncApiKeyFromServer();
 
-      console.log("Coniugiamo initialized successfully!");
+      console.log("Veerber initialized successfully!");
     },
 
     // Bind all event listeners
@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Sound Toggle
       document.getElementById("btn-toggle-sound").addEventListener("click", () => {
         this.sound = AudioManager.toggleSound();
-        localStorage.setItem("coniugiamo_sound", this.sound);
+        localStorage.setItem("veerber_sound", this.sound);
         this.updateSoundIcon();
         if (this.sound) AudioManager.playClick();
       });
@@ -192,7 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (confirm("Sei sicuro di voler resettare tutti i tuoi progressi, i punti XP e le statistiche?")) {
           StorageManager.resetProgress();
                 // Load saved language
-      const savedLang = localStorage.getItem("coniugiamo_lang") || "it";
+      const savedLang = localStorage.getItem("veerber_lang") || "it";
       this.setLanguage(savedLang);
           AudioManager.playFailure();
         }
@@ -343,7 +343,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setTheme(theme) {
       this.theme = theme;
       document.body.setAttribute("data-theme", theme);
-      localStorage.setItem("coniugiamo_theme", theme);
+      localStorage.setItem("veerber_theme", theme);
 
       const themeBtn = document.getElementById("btn-toggle-theme").querySelector("i");
       if (theme === "dark") {
@@ -438,7 +438,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // If returning to dashboard, update stats
       if (newView === "dashboard") {
               // Load saved language
-      const savedLang = localStorage.getItem("coniugiamo_lang") || "it";
+      const savedLang = localStorage.getItem("veerber_lang") || "it";
       this.setLanguage(savedLang);
       }
     },
@@ -1008,7 +1008,7 @@ document.addEventListener("DOMContentLoaded", () => {
        ====================================================================== */
     setLanguage(lang) {
       this.lang = lang;
-      localStorage.setItem("coniugiamo_lang", lang);
+      localStorage.setItem("veerber_lang", lang);
       StorageManager.init(lang);
       
       // Update select element value
@@ -1227,7 +1227,7 @@ renderExplorerList() {
         AudioManager.playClick();
         this.renderExplorerDetails(verb); // re-render to update colors
               // Load saved language
-      const savedLang = localStorage.getItem("coniugiamo_lang") || "it";
+      const savedLang = localStorage.getItem("veerber_lang") || "it";
       this.setLanguage(savedLang); // updates counts in dashboard
       });
 
