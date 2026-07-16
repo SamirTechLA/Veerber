@@ -416,6 +416,71 @@ const irregularVerbs = [
       imperfetto: { io: "scendevo", tu: "scendevi", lui_lei: "scendeva", noi: "scendevamo", voi: "scendevate", loro: "scendevano" },
       futuro: { io: "scenderò", tu: "scenderai", lui_lei: "scenderà", noi: "scenderemo", voi: "scenderete", loro: "scenderanno" }
     }
+  },
+  {
+    infinitive: "tenere",
+    translation: "to keep, to hold",
+    group: "ere",
+    type: "irregular",
+    auxiliary: "avere",
+    conjugations: {
+      presente: { io: "tengo", tu: "tieni", lui_lei: "tiene", noi: "teniamo", voi: "tenete", loro: "tengono" },
+      passato_prossimo: { io: "ho tenuto", tu: "hai tenuto", lui_lei: "ha tenuto", noi: "abbiamo tenuto", voi: "avete tenuto", loro: "hanno tenuto" },
+      imperfetto: { io: "tenevo", tu: "tenevi", lui_lei: "teneva", noi: "tenevamo", voi: "tenevate", loro: "tenevano" },
+      futuro: { io: "terrò", tu: "terrai", lui_lei: "terrà", noi: "terremo", voi: "terrete", loro: "terranno" }
+    }
+  },
+  {
+    infinitive: "tradurre",
+    translation: "to translate",
+    group: "ere",
+    type: "irregular",
+    auxiliary: "avere",
+    conjugations: {
+      presente: { io: "traduco", tu: "traduci", lui_lei: "traduce", noi: "traduciamo", voi: "traducete", loro: "traducono" },
+      passato_prossimo: { io: "ho tradotto", tu: "hai tradotto", lui_lei: "ha tradotto", noi: "abbiamo tradotto", voi: "avete tradotto", loro: "hanno tradotto" },
+      imperfetto: { io: "traducevo", tu: "traducevi", lui_lei: "traduceva", noi: "traducevamo", voi: "traducevate", loro: "traducevano" },
+      futuro: { io: "tradurrò", tu: "tradurrai", lui_lei: "tradurrà", noi: "tradurremo", voi: "tradurrete", loro: "tradurranno" }
+    }
+  },
+  {
+    infinitive: "proporre",
+    translation: "to propose, to suggest",
+    group: "ere",
+    type: "irregular",
+    auxiliary: "avere",
+    conjugations: {
+      presente: { io: "propongo", tu: "proponi", lui_lei: "propone", noi: "proponiamo", voi: "proponete", loro: "propongono" },
+      passato_prossimo: { io: "ho proposto", tu: "hai proposto", lui_lei: "ha proposto", noi: "abbiamo proposto", voi: "avete proposto", loro: "hanno proposto" },
+      imperfetto: { io: "proponevo", tu: "proponevi", lui_lei: "proponeva", noi: "proponevamo", voi: "proponevate", loro: "proponevano" },
+      futuro: { io: "proporrò", tu: "proporrai", lui_lei: "proporrà", noi: "proporremo", voi: "proporrete", loro: "proporranno" }
+    }
+  },
+  {
+    infinitive: "nascere",
+    translation: "to be born",
+    group: "ere",
+    type: "irregular",
+    auxiliary: "essere",
+    conjugations: {
+      presente: { io: "nasco", tu: "nasci", lui_lei: "nasce", noi: "nasciamo", voi: "nascete", loro: "nascono" },
+      passato_prossimo: { io: "sono nato/a", tu: "sei nato/a", lui_lei: "è nato/a", noi: "siamo nati/e", voi: "siete nati/e", loro: "sono nati/e" },
+      imperfetto: { io: "nascevo", tu: "nascevi", lui_lei: "nasceva", noi: "nascevamo", voi: "nascevate", loro: "nascevano" },
+      futuro: { io: "nascerò", tu: "nascerai", lui_lei: "nascerà", noi: "nasceremo", voi: "nascerete", loro: "nasceranno" }
+    }
+  },
+  {
+    infinitive: "spegnere",
+    translation: "to turn off, to switch off",
+    group: "ere",
+    type: "irregular",
+    auxiliary: "avere",
+    conjugations: {
+      presente: { io: "spengo", tu: "spegni", lui_lei: "spegne", noi: "spegniamo", voi: "spegnete", loro: "spengono" },
+      passato_prossimo: { io: "ho spento", tu: "hai spento", lui_lei: "ha spento", noi: "abbiamo spento", voi: "avete spento", loro: "hanno spento" },
+      imperfetto: { io: "spegnevo", tu: "spegnevi", lui_lei: "spegneva", noi: "spegnevamo", voi: "spegnevate", loro: "spegnevano" },
+      futuro: { io: "spegnerò", tu: "spegnerai", lui_lei: "spegnerà", noi: "spegneremo", voi: "spegnerete", loro: "spegneranno" }
+    }
   }
 ];
 
@@ -435,6 +500,12 @@ const regularVerbsData = [
   { inf: "giocare", trans: "to play (games/sports)", grp: "are", aux: "avere" },
   { inf: "pagare", trans: "to pay", grp: "are", aux: "avere" },
   { inf: "cominciare", trans: "to begin, to start", grp: "are", aux: "avere" },
+  { inf: "trovare", trans: "to find", grp: "are", aux: "avere" },
+  { inf: "cercare", trans: "to search, to look for", grp: "are", aux: "avere" },
+  { inf: "chiamare", trans: "to call", grp: "are", aux: "avere" },
+  { inf: "portare", trans: "to bring, to carry", grp: "are", aux: "avere" },
+  { inf: "aspettare", trans: "to wait", grp: "are", aux: "avere" },
+  { inf: "guardare", trans: "to watch, to look at", grp: "are", aux: "avere" },
 
   // -ere regular verbs (some with irregular past participle)
   { inf: "scrivere", trans: "to write", grp: "ere", aux: "avere", opt: { irregularPastParticiple: "scritto" } },
@@ -447,6 +518,13 @@ const regularVerbsData = [
   { inf: "correre", trans: "to run", grp: "ere", aux: "essere", opt: { irregularPastParticiple: "corso" } },
   { inf: "vivere", trans: "to live", grp: "ere", aux: "avere", opt: { irregularPastParticiple: "vissuto" } },
   { inf: "perdere", trans: "to lose", grp: "ere", aux: "avere", opt: { irregularPastParticiple: "perso" } },
+  { inf: "credere", trans: "to believe", grp: "ere", aux: "avere" },
+  { inf: "chiudere", trans: "to close", grp: "ere", aux: "avere", opt: { irregularPastParticiple: "chiuso" } },
+  { inf: "rispondere", trans: "to answer", grp: "ere", aux: "avere", opt: { irregularPastParticiple: "risposto" } },
+  { inf: "decidere", trans: "to decide", grp: "ere", aux: "avere", opt: { irregularPastParticiple: "deciso" } },
+  { inf: "piangere", trans: "to cry", grp: "ere", aux: "avere", opt: { irregularPastParticiple: "pianto" } },
+  { inf: "ridere", trans: "to laugh", grp: "ere", aux: "avere", opt: { irregularPastParticiple: "riso" } },
+  { inf: "rompere", trans: "to break", grp: "ere", aux: "avere", opt: { irregularPastParticiple: "rotto" } },
 
   // -ire regular verbs (without -isc)
   { inf: "partire", trans: "to leave, to depart", grp: "ire", aux: "essere" },
