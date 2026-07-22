@@ -49,6 +49,11 @@
         <button class="btn-icon" id="btn-toggle-theme" title="Cambia Tema">
           <i class="fa-solid fa-moon"></i>
         </button>
+
+        <!-- Settings toggle -->
+        <button class="btn-icon" id="btn-toggle-settings" title="Impostazioni / Settings">
+          <i class="fa-solid fa-gear"></i>
+        </button>
       </div>
     </header>
 
@@ -382,6 +387,112 @@
       </div>
     </section>
 
+  </div>
+
+  <!-- SETTINGS MODAL -->
+  <div class="modal-backdrop" id="modal-settings" style="display: none;">
+    <div class="modal-card glass-panel">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modal-settings-title" data-i18n="settings_title">
+          <i class="fa-solid fa-gear"></i> Settings
+        </h2>
+        <button class="btn-icon modal-close" id="btn-close-settings" title="Close">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        
+        <!-- UI Language Option -->
+        <div class="setting-row">
+          <div class="setting-info">
+            <span class="setting-label" data-i18n="ui_lang_label">UI Language</span>
+            <span class="setting-sub" data-i18n="ui_lang_sub">Language of buttons, labels & menus</span>
+          </div>
+          <div class="segmented-control" id="ui-lang-selector">
+            <button class="segmented-btn" data-uilang="en">🇬🇧 EN</button>
+            <button class="segmented-btn" data-uilang="it">🇮🇹 IT</button>
+            <button class="segmented-btn" data-uilang="de">🇩🇪 DE</button>
+          </div>
+        </div>
+
+        <!-- Learning Target Language Option -->
+        <div class="setting-row">
+          <div class="setting-info">
+            <span class="setting-label" data-i18n="target_lang_label">Practice Language</span>
+            <span class="setting-sub" data-i18n="target_lang_sub">Verbs & sentences to practice</span>
+          </div>
+          <div class="segmented-control" id="target-lang-selector">
+            <button class="segmented-btn" data-targetlang="it">🇮🇹 Italian</button>
+            <button class="segmented-btn" data-targetlang="de">🇩🇪 German</button>
+          </div>
+        </div>
+
+        <!-- Appearance (Light/Dark Theme) -->
+        <div class="setting-row">
+          <div class="setting-info">
+            <span class="setting-label" data-i18n="theme_label">Appearance</span>
+            <span class="setting-sub" data-i18n="theme_sub">Switch between Light and Dark mode</span>
+          </div>
+          <div class="segmented-control" id="theme-selector">
+            <button class="segmented-btn" data-themeval="light"><i class="fa-solid fa-sun"></i> <span data-i18n="theme_light">Light</span></button>
+            <button class="segmented-btn" data-themeval="dark"><i class="fa-solid fa-moon"></i> <span data-i18n="theme_dark">Dark</span></button>
+          </div>
+        </div>
+
+        <!-- Sound FX Option -->
+        <div class="setting-row">
+          <div class="setting-info">
+            <span class="setting-label" data-i18n="sound_label">Sound Effects</span>
+            <span class="setting-sub" data-i18n="sound_sub">Audio feedback on answers</span>
+          </div>
+          <div class="segmented-control" id="sound-selector">
+            <button class="segmented-btn" data-soundval="true"><i class="fa-solid fa-volume-high"></i> <span data-i18n="sound_on">On</span></button>
+            <button class="segmented-btn" data-soundval="false"><i class="fa-solid fa-volume-xmark"></i> <span data-i18n="sound_off">Off</span></button>
+          </div>
+        </div>
+
+        <!-- Gemini AI API Key Option -->
+        <div class="setting-group-box">
+          <h3 class="setting-box-title">
+            <i class="fa-solid fa-robot"></i> <span data-i18n="ai_section_title">Gemini AI Key</span>
+          </h3>
+          <p class="setting-sub" style="margin-bottom: 8px;" data-i18n="ai_section_desc">
+            Enable unlimited dynamic context sentences with your free Gemini API key.
+          </p>
+          <div style="position:relative; display:flex; align-items:center; width:100%; margin-bottom: 8px;">
+            <input type="password" id="modal-input-api-key" placeholder="Paste Gemini API key..." data-i18n-placeholder="ai_key_placeholder" style="width:100%; padding: 8px 36px 8px 12px; font-size:0.85rem; border-radius:6px; border:1px solid var(--border-color); background:var(--bg-primary); color:var(--text-main); outline:none;">
+            <button id="modal-btn-toggle-key-visibility" style="position:absolute; right:8px; background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:0.9rem;">
+              <i class="fa-solid fa-eye-slash"></i>
+            </button>
+          </div>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <button class="btn-secondary" id="modal-btn-save-api-key" style="flex:1; padding: 6px 12px; font-size:0.8rem; border-radius:6px;" data-i18n="btn_save_verify">
+              Save & Verify
+            </button>
+            <button class="btn-secondary" id="modal-btn-clear-api-key" style="padding: 6px 10px; font-size:0.8rem; border-radius:6px; border-color:var(--error); color:var(--error);">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.8rem; margin-top:8px;">
+            <span><span data-i18n="ai_status_label">Status:</span> <strong id="modal-api-key-status" style="color:var(--text-muted);" data-i18n="ai_status_disabled">Not Set</strong></span>
+            <a href="https://aistudio.google.com/" target="_blank" style="color:var(--accent-blue); text-decoration:underline;" data-i18n="get_free_key">Get free key</a>
+          </div>
+        </div>
+
+        <!-- Reset Data -->
+        <div class="setting-row" style="border:none; margin-top:12px; padding-top:0;">
+          <div class="setting-info">
+            <span class="setting-label" data-i18n="reset_data_label">Reset Data</span>
+            <span class="setting-sub" data-i18n="reset_data_sub">Clear all stats, level & XP progress</span>
+          </div>
+          <button class="btn-secondary" id="modal-btn-reset-data" style="font-size:0.8rem; padding: 6px 12px; border-color:var(--error); color:var(--error);">
+            <i class="fa-solid fa-trash-can"></i> <span data-i18n="btn_reset">Reset</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
   </div>
 
   <!-- Main scripts -->
