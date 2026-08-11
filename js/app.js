@@ -333,12 +333,13 @@ document.addEventListener("DOMContentLoaded", () => {
       this.sound = savedSound === null ? true : savedSound === "true";
       this.updateSoundIcon();
 
-      // Load saved UI language
-      const savedUiLang = localStorage.getItem("veerber_ui_lang") || "en";
-      
       // Load saved Target Practice language
       const savedTargetLang = localStorage.getItem("veerber_lang") || "it";
-      this.setLanguage(savedTargetLang);
+      this.lang = savedTargetLang;
+
+      // Load saved UI language (defaults to savedTargetLang if not explicitly set)
+      const savedUiLang = localStorage.getItem("veerber_ui_lang") || savedTargetLang;
+      this.uiLang = savedUiLang;
 
       // Apply UI localization
       this.setUiLanguage(savedUiLang);
@@ -384,13 +385,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
 
+      // Update titles
+      document.querySelectorAll("[data-i18n-title]").forEach(el => {
+        const key = el.getAttribute("data-i18n-title");
+        if (dict[key]) {
+          el.title = dict[key];
+        }
+      });
+
       // Update segmented control buttons active state in modal
       document.querySelectorAll("#ui-lang-selector .segmented-btn").forEach(btn => {
         btn.classList.toggle("active", btn.dataset.uilang === uiLang);
       });
 
       // Update dashboard text labels
-      this.setLanguage(this.lang);
+      this.setLanguage(this.lang, false);
     },
 
     // Bind all event listeners
@@ -817,10 +826,16 @@ document.addEventListener("DOMContentLoaded", () => {
     /* ======================================================================
        TARGET PRACTICE LANGUAGE & DATA LOGIC
        ====================================================================== */
-    setLanguage(lang) {
+    setLanguage(lang, syncUi = true) {
       this.lang = lang;
       localStorage.setItem("veerber_lang", lang);
       StorageManager.init(lang);
+      
+      // When target practice language changes, also sync UI localization to match
+      if (syncUi && this.uiLang !== lang) {
+        this.setUiLanguage(lang);
+        return;
+      }
       
       // Update select element value in header and modal
       const headerSelect = document.getElementById("header-lang-select");

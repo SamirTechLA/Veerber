@@ -63,18 +63,18 @@
         
         <!-- Game Configuration Panel -->
         <section class="glass-panel dashboard-panel">
-          <h2 class="panel-title">
+          <h2 class="panel-title" data-i18n="config_title">
             <i class="fa-solid fa-sliders"></i> Configura Studio
           </h2>
           
           <div class="welcome-box">
             <h3 id="welcome-title">Ciao, Studente!</h3>
-            <p>Seleziona i verbi e i tempi che desideri esercitare, quindi scegli una modalità di studio.</p>
+            <p data-i18n="welcome_desc">Seleziona i verbi e i tempi che desideri esercitare, quindi scegli una modalità di studio.</p>
           </div>
 
           <!-- Verb type filters -->
           <div class="setup-group">
-            <span class="setup-label">Tipologia Verbi (Verb Type)</span>
+            <span class="setup-label" data-i18n="filter_type_label">Tipologia Verbi (Verb Type)</span>
             <div class="tag-selector" id="filter-type">
               <button class="tag-btn selected" data-type="all">Tutti</button>
               <button class="tag-btn" data-type="regular">Regolari</button>
@@ -84,7 +84,7 @@
 
           <!-- Verb conjugation group filters -->
           <div class="setup-group">
-            <span class="setup-label">Coniugazione (Ending Group)</span>
+            <span class="setup-label" data-i18n="filter_group_label">Coniugazione (Ending Group)</span>
             <div class="tag-selector" id="filter-group">
               <button class="tag-btn selected" data-group="all">Tutte</button>
               <button class="tag-btn" data-group="are">-are</button>
@@ -95,7 +95,7 @@
 
           <!-- Tense checklist selection -->
           <div class="setup-group">
-            <span class="setup-label">Tempi Verbali (Tenses - Select at least one)</span>
+            <span class="setup-label" data-i18n="filter_tense_label">Tempi Verbali (Tenses - Select at least one)</span>
             <div class="tag-selector" id="filter-tenses">
               <button class="tag-btn selected" data-tense="presente">Presente</button>
               <button class="tag-btn" data-tense="passato_prossimo">Passato Prossimo</button>
@@ -106,7 +106,7 @@
 
           <!-- Verb Pool selection -->
           <div class="setup-group">
-            <span class="setup-label">Bacino di Verbi (Verb Pool)</span>
+            <span class="setup-label" data-i18n="filter_pool_label">Bacino di Verbi (Verb Pool)</span>
             <div class="tag-selector" id="filter-pool">
               <button class="tag-btn selected" data-pool="all">Tutti i verbi</button>
               <button class="tag-btn" data-pool="struggle">Verbi difficili (<span id="tag-struggle-count">0</span>)</button>
@@ -116,48 +116,48 @@
 
           <!-- Actions -->
           <div class="actions-block">
-            <button class="btn-primary" id="btn-start-quiz">
+            <button class="btn-primary" id="btn-start-quiz" data-i18n="btn_start_quiz">
               <i class="fa-solid fa-graduation-cap"></i> Avvia Quiz
             </button>
-            <button class="btn-secondary" id="btn-start-flashcards">
+            <button class="btn-secondary" id="btn-start-flashcards" data-i18n="btn_start_flashcards">
               <i class="fa-solid fa-layer-group"></i> Flashcards
             </button>
           </div>
           
-          <button class="btn-primary" id="btn-start-sentences" style="width:100%; margin-top: 12px; background: var(--accent-blue);">
+          <button class="btn-primary" id="btn-start-sentences" data-i18n="btn_start_sentences" style="width:100%; margin-top: 12px; background: var(--accent-blue);">
             <i class="fa-solid fa-pen-to-square"></i> Completa Frasi
           </button>
           
-          <button class="btn-secondary" id="btn-go-explorer" style="width:100%; margin-top: 12px;">
+          <button class="btn-secondary" id="btn-go-explorer" data-i18n="btn_go_explorer" style="width:100%; margin-top: 12px;">
             <i class="fa-solid fa-book-open"></i> Esplora Coniugazioni (Verb Dictionary)
           </button>
         </section>
 
         <!-- Right Side: Stats & Level Progress -->
         <aside class="glass-panel dashboard-panel" style="display:flex; flex-direction:column; gap:20px;">
-          <h2 class="panel-title">
+          <h2 class="panel-title" data-i18n="stats_title">
             <i class="fa-solid fa-chart-line"></i> I tuoi Progressi
           </h2>
 
           <div class="stats-list">
             <div class="glass-panel stat-card">
               <span class="stat-value" id="stat-xp">0</span>
-              <span class="stat-label">XP totali</span>
+              <span class="stat-label" data-i18n="stat_xp_label">XP totali</span>
             </div>
             
             <div class="glass-panel stat-card">
               <span class="stat-value" id="stat-streak">0</span>
-              <span class="stat-label">Streak (Giorni)</span>
+              <span class="stat-label" data-i18n="stat_streak_label">Streak (Giorni)</span>
             </div>
 
             <div class="glass-panel stat-card">
               <span class="stat-value" id="stat-accuracy">0%</span>
-              <span class="stat-label">Precisione</span>
+              <span class="stat-label" data-i18n="stat_accuracy_label">Precisione</span>
             </div>
             
             <div class="glass-panel stat-card">
               <span class="stat-value" id="stat-attempts">0</span>
-              <span class="stat-label">Esercizi fatti</span>
+              <span class="stat-label" data-i18n="stat_attempts_label">Esercizi fatti</span>
             </div>
 
             <!-- XP progress track -->
@@ -177,10 +177,10 @@
 
           <!-- Struggle/Tricky verbs list -->
           <div class="glass-panel struggle-panel" id="struggle-panel" style="display:none;">
-            <h3 style="font-size: 1rem; color: var(--text-main); margin-bottom: 8px;">
+            <h3 style="font-size: 1rem; color: var(--text-main); margin-bottom: 8px;" data-i18n="struggle_title">
               ⚠️ Verbi ostici (Struggling Verbs)
             </h3>
-            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;" data-i18n="struggle_desc">
               Questi verbi hanno una precisione inferiore al 70%. Esercitati di più!
             </p>
             <div class="struggle-list" id="struggle-container">
@@ -190,22 +190,22 @@
           
           <!-- Gemini AI Settings Panel -->
           <div class="glass-panel struggle-panel" style="display:flex; flex-direction:column; gap:10px; padding:16px;">
-            <h3 style="font-size: 1rem; color: var(--text-main); margin-bottom: 4px;">
+            <h3 style="font-size: 1rem; color: var(--text-main); margin-bottom: 4px;" data-i18n="ai_section_title">
               🤖 Intelligenza Artificiale
             </h3>
-            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 2px;">
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 2px;" data-i18n="ai_section_desc">
               Genera frasi infinite in tempo reale collegando la chiave API gratuita di Gemini.
             </p>
             
             <div style="position:relative; display:flex; align-items:center; width:100%;">
-              <input type="password" id="input-api-key" placeholder="Incolla chiave API Gemini..." style="width:100%; padding: 8px 36px 8px 12px; font-size:0.85rem; border-radius:6px; border:1px solid var(--border-color); background:rgba(0,0,0,0.02); color:var(--text-main); outline:none;">
+              <input type="password" id="input-api-key" placeholder="Incolla chiave API Gemini..." data-i18n-placeholder="ai_key_placeholder" style="width:100%; padding: 8px 36px 8px 12px; font-size:0.85rem; border-radius:6px; border:1px solid var(--border-color); background:rgba(0,0,0,0.02); color:var(--text-main); outline:none;">
               <button id="btn-toggle-key-visibility" style="position:absolute; right:8px; background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:0.9rem;">
                 <i class="fa-solid fa-eye-slash"></i>
               </button>
             </div>
 
             <div style="display:flex; gap:8px;">
-              <button class="btn-secondary" id="btn-save-api-key" style="flex:1; padding: 6px 12px; font-size:0.8rem; border-radius:6px; font-family:inherit;">
+              <button class="btn-secondary" id="btn-save-api-key" data-i18n="btn_save_verify" style="flex:1; padding: 6px 12px; font-size:0.8rem; border-radius:6px; font-family:inherit;">
                 Salva e Verifica
               </button>
               <button class="btn-secondary" id="btn-clear-api-key" style="padding: 6px 10px; font-size:0.8rem; border-radius:6px; border-color:var(--error); color:var(--error);">
@@ -214,13 +214,13 @@
             </div>
 
             <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.8rem; margin-top:2px;">
-              <span>Stato: <strong id="api-key-status" style="color:var(--text-muted);">Non inserita</strong></span>
-              <a href="https://aistudio.google.com/" target="_blank" style="color:var(--accent-blue); text-decoration:underline;">Ottieni chiave gratis</a>
+              <span><span data-i18n="ai_status_label">Stato:</span> <strong id="api-key-status" style="color:var(--text-muted);">Non inserita</strong></span>
+              <a href="https://aistudio.google.com/" target="_blank" style="color:var(--accent-blue); text-decoration:underline;" data-i18n="get_free_key">Ottieni chiave gratis</a>
             </div>
           </div>
 
           <button class="btn-secondary" id="btn-reset-data" style="margin-top:auto; font-size:0.8rem; padding: 8px 12px; align-self:center; opacity:0.6;">
-            <i class="fa-solid fa-trash-can"></i> Resetta Dati
+            <i class="fa-solid fa-trash-can"></i> <span data-i18n="btn_reset">Resetta Dati</span>
           </button>
         </aside>
 
@@ -230,7 +230,7 @@
     <!-- DRILL (QUIZ) VIEW -->
     <section class="view" id="view-drill">
       <div class="session-header glass-panel" style="padding:16px;">
-        <button class="btn-icon" id="btn-exit-drill" title="Torna alla Dashboard">
+        <button class="btn-icon" id="btn-exit-drill" title="Torna alla Dashboard" data-i18n-title="exit_drill_title">
           <i class="fa-solid fa-arrow-left"></i>
         </button>
         
@@ -247,7 +247,7 @@
         <!-- Loading overlay for Gemini API requests -->
         <div id="drill-loading-overlay" style="position:absolute; top:0; left:0; width:100%; height:100%; background:var(--bg-card); backdrop-filter:var(--backdrop-blur); display:none; flex-direction:column; align-items:center; justify-content:center; gap:16px; z-index:100; border-radius:var(--radius-lg);">
           <div class="spinner" style="width:40px; height:40px; border:4px solid var(--border-color); border-top-color:var(--primary); border-radius:50%; animation:spin 1s linear infinite;"></div>
-          <p style="font-weight:600; color:var(--text-main);" id="loading-overlay-text">Generazione frasi con Gemini...</p>
+          <p style="font-weight:600; color:var(--text-main);" id="loading-overlay-text" data-i18n="loading_overlay_text">Generazione frasi con Gemini...</p>
         </div>
 
         <!-- Floating XP popup container -->
@@ -262,7 +262,7 @@
         </div>
 
         <div class="drill-input-wrapper">
-          <input type="text" class="drill-input" id="drill-text-input" placeholder="Scrivi la coniugazione..." autocomplete="off" spellcheck="false">
+          <input type="text" class="drill-input" id="drill-text-input" placeholder="Scrivi la coniugazione..." data-i18n-placeholder="drill_placeholder" autocomplete="off" spellcheck="false">
           
           <!-- Quick Character Accents Row -->
           <div class="accent-row">
@@ -275,7 +275,7 @@
           </div>
         </div>
 
-        <button class="btn-primary" id="btn-submit-drill" style="max-width: 400px; width: 100%; margin: 0 auto;">
+        <button class="btn-primary" id="btn-submit-drill" data-i18n="btn_submit_drill" style="max-width: 400px; width: 100%; margin: 0 auto;">
           Invia Risposta
         </button>
 
@@ -294,7 +294,7 @@
     <!-- FLASHCARDS VIEW -->
     <section class="view" id="view-flashcards">
       <div class="session-header glass-panel" style="padding:16px; margin-bottom:12px;">
-        <button class="btn-icon" id="btn-exit-flashcards" title="Torna alla Dashboard">
+        <button class="btn-icon" id="btn-exit-flashcards" title="Torna alla Dashboard" data-i18n-title="exit_flashcards_title">
           <i class="fa-solid fa-arrow-left"></i>
         </button>
         
@@ -311,7 +311,7 @@
             <h2 id="card-inf">parlare</h2>
             <p id="card-trans">to speak, to talk</p>
             <div class="drill-badge tense" id="card-tense">Presente</div>
-            <div class="flip-hint" style="margin-top:40px;">
+            <div class="flip-hint" style="margin-top:40px;" data-i18n="flip_hint_front">
               <i class="fa-solid fa-rotate-left"></i> Clicca per girare
             </div>
           </div>
@@ -325,7 +325,7 @@
               <!-- Dynamically populated -->
             </div>
             
-            <div class="flip-hint" style="margin-top:auto; font-size: 0.8rem; color: var(--text-muted);">
+            <div class="flip-hint" style="margin-top:auto; font-size: 0.8rem; color: var(--text-muted);" data-i18n="flip_hint_back">
               Clicca di nuovo per vedere la traduzione
             </div>
           </div>
@@ -334,10 +334,10 @@
       </div>
 
       <div class="flashcard-actions">
-        <button class="btn-secondary" id="btn-flash-fail" style="border-color: var(--error); color: var(--error);">
+        <button class="btn-secondary" id="btn-flash-fail" data-i18n="btn_flash_fail" style="border-color: var(--error); color: var(--error);">
           <i class="fa-solid fa-xmark"></i> Non la sapevo
         </button>
-        <button class="btn-primary" id="btn-flash-success" style="background: var(--success); box-shadow: 0 4px 12px var(--success-glow);">
+        <button class="btn-primary" id="btn-flash-success" data-i18n="btn_flash_success" style="background: var(--success); box-shadow: 0 4px 12px var(--success-glow);">
           <i class="fa-solid fa-check"></i> Lo sapevo! (+10 XP)
         </button>
       </div>
@@ -346,7 +346,7 @@
     <!-- EXPLORER (DICTIONARY) VIEW -->
     <section class="view" id="view-explorer">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <button class="btn-secondary" id="btn-exit-explorer">
+        <button class="btn-secondary" id="btn-exit-explorer" data-i18n="exit_explorer">
           <i class="fa-solid fa-arrow-left"></i> Dashboard
         </button>
         <h2 style="font-size:1.5rem; font-family: var(--font-family-display);">Esplora Verbi Italiani</h2>
@@ -356,11 +356,11 @@
       <div class="explorer-search-row">
         <div class="search-input-wrap">
           <i class="fa-solid fa-magnifying-glass"></i>
-          <input type="text" class="search-input" id="explorer-search" placeholder="Cerca verbo per infinito o traduzione (e.g., fare, work)...">
+          <input type="text" class="search-input" id="explorer-search" placeholder="Cerca verbo per infinito o traduzione (e.g., fare, work)..." data-i18n-placeholder="explorer_search_placeholder">
         </div>
         
         <select id="explorer-filter-group" class="glass-panel" style="padding: 0 16px; border-radius: var(--radius-md); border:1px solid var(--border-color); color:var(--text-main); background:var(--bg-card);">
-          <option value="all">Tutte le coniugazioni</option>
+          <option value="all" data-i18n="explorer_group_all">Tutte le coniugazioni</option>
           <option value="are">-are</option>
           <option value="ere">-ere</option>
           <option value="ire">-ire</option>
@@ -380,7 +380,7 @@
           <!-- Dynamic details -->
           <div class="empty-state">
             <i class="fa-solid fa-book-open"></i>
-            <p>Seleziona un verbo dalla lista a sinistra per visualizzare le tabelle di coniugazione complete.</p>
+            <p data-i18n="explorer_empty_details">Seleziona un verbo dalla lista a sinistra per visualizzare le tabelle di coniugazione complete.</p>
           </div>
         </div>
 
