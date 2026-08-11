@@ -1062,6 +1062,43 @@ document.addEventListener("DOMContentLoaded", () => {
       this.showQuizQuestion();
     },
 
+        renderAccentRow() {
+      const accentRow = document.querySelector(".accent-row");
+      const input = document.getElementById("drill-text-input");
+      if (!accentRow || !input) return;
+
+      if (this.lang === "de") {
+        accentRow.innerHTML = `
+          <button class="btn-accent">ä</button>
+          <button class="btn-accent">ö</button>
+          <button class="btn-accent">ü</button>
+          <button class="btn-accent">ß</button>
+        `;
+      } else {
+        accentRow.innerHTML = `
+          <button class="btn-accent">à</button>
+          <button class="btn-accent">è</button>
+          <button class="btn-accent">é</button>
+          <button class="btn-accent">ì</button>
+          <button class="btn-accent">ò</button>
+          <button class="btn-accent">ù</button>
+        `;
+      }
+
+      accentRow.querySelectorAll(".btn-accent").forEach(btn => {
+        btn.addEventListener("click", () => {
+          AudioManager.playClick();
+          const char = btn.textContent;
+          const start = input.selectionStart;
+          const end = input.selectionEnd;
+          const val = input.value;
+          input.value = val.substring(0, start) + char + val.substring(end);
+          input.selectionStart = input.selectionEnd = start + 1;
+          input.focus();
+        });
+      });
+    },
+
     showQuizQuestion() {
       this.quiz.isAnswered = false;
       const q = this.quiz.questions[this.quiz.currentIndex];
@@ -1078,41 +1115,7 @@ document.addEventListener("DOMContentLoaded", () => {
       input.disabled = false;
       input.focus();
 
-      // Render custom accent keys for Italian / German
-      const accentRow = document.querySelector(".accent-row");
-      if (accentRow) {
-        if (this.lang === "de") {
-          accentRow.innerHTML = `
-            <button class="btn-accent">ä</button>
-            <button class="btn-accent">ö</button>
-            <button class="btn-accent">ü</button>
-            <button class="btn-accent">ß</button>
-          `;
-        } else {
-          accentRow.innerHTML = `
-            <button class="btn-accent">à</button>
-            <button class="btn-accent">è</button>
-            <button class="btn-accent">é</button>
-            <button class="btn-accent">ì</button>
-            <button class="btn-accent">ò</button>
-            <button class="btn-accent">ù</button>
-          `;
-        }
-
-        // Rebind click events
-        accentRow.querySelectorAll(".btn-accent").forEach(btn => {
-          btn.addEventListener("click", () => {
-            AudioManager.playClick();
-            const char = btn.textContent;
-            const start = input.selectionStart;
-            const end = input.selectionEnd;
-            const val = input.value;
-            input.value = val.substring(0, start) + char + val.substring(end);
-            input.selectionStart = input.selectionEnd = start + 1;
-            input.focus();
-          });
-        });
-      }
+      this.renderAccentRow();
 
       // Hide feedback
       const feedback = document.getElementById("drill-feedback");
@@ -1130,11 +1133,21 @@ document.addEventListener("DOMContentLoaded", () => {
     },
 
     handleQuizSubmit() {
+      if (this.quiz.autoAdvanceTimer) {
+        clearTimeout(this.quiz.autoAdvanceTimer);
+        this.quiz.autoAdvanceTimer = null;
+      }
+
       if (this.quiz.isAnswered) {
         // Go to next question
         this.quiz.currentIndex++;
         if (this.quiz.currentIndex < this.quiz.questions.length) {
-          this.showQuizQuestion();
+          const nextQ = this.quiz.questions[this.quiz.currentIndex];
+          if (nextQ && nextQ.sentence) {
+            this.showSentenceQuestion();
+          } else {
+            this.showQuizQuestion();
+          }
         } else {
           this.endQuizSession();
         }
@@ -1194,6 +1207,13 @@ document.addEventListener("DOMContentLoaded", () => {
         headline.innerHTML = this.t("feedback_correct_headline");
         details.innerHTML = `+${xpGained} XP!`;
         this.spawnFloatyXP(`+${xpGained} XP`);
+
+        // Auto advance on correct answer after 1.4s if user doesn't click next manually
+        this.quiz.autoAdvanceTimer = setTimeout(() => {
+          if (this.quiz.active && this.quiz.isAnswered) {
+            this.handleQuizSubmit();
+          }
+        }, 1400);
       } else {
         AudioManager.playFailure();
         feedback.className = "drill-feedback visible wrong";
@@ -1326,6 +1346,8 @@ document.addEventListener("DOMContentLoaded", () => {
       input.value = "";
       input.disabled = false;
       input.focus();
+
+      this.renderAccentRow();
 
       // Hide feedback
       const feedback = document.getElementById("drill-feedback");
