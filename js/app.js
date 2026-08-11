@@ -428,6 +428,29 @@ document.addEventListener("DOMContentLoaded", () => {
       window.addEventListener("keydown", (e) => {
         if (e.key === "Escape" && settingsModal && settingsModal.classList.contains("active")) {
           this.closeSettingsModal();
+          return;
+        }
+
+        // Flashcards keyboard shortcuts
+        if (this.view === "flashcards" && this.flashcards.active) {
+          const activeModal = document.querySelector(".modal-backdrop[style*='display: flex']");
+          if (activeModal) return;
+
+          if (e.key === " " || e.key === "ArrowUp") {
+            e.preventDefault();
+            const cardEl = document.getElementById("flashcard-element");
+            if (cardEl) {
+              this.flashcards.flipped = !this.flashcards.flipped;
+              cardEl.classList.toggle("flipped", this.flashcards.flipped);
+              AudioManager.playClick();
+            }
+          } else if (e.key === "ArrowRight" || e.key === "1") {
+            e.preventDefault();
+            this.handleFlashcardFeedback(true);
+          } else if (e.key === "ArrowLeft" || e.key === "2") {
+            e.preventDefault();
+            this.handleFlashcardFeedback(false);
+          }
         }
       });
 

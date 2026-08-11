@@ -115,6 +115,10 @@ const StorageManager = {
     return { xpGained, leveledUp };
   },
 
+  recordAttempt(verb, isCorrect) {
+    return this.recordAnswer(verb, isCorrect);
+  },
+
   toggleReviewVerb(verb) {
     const idx = this.state.reviewList.indexOf(verb);
     let added = false;
