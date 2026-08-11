@@ -29,7 +29,7 @@ const allSentencesDe = [
     correct: "hört"
   },
   {
-    sentence: "Wir ______ seit drei Jahren in Berlin.",
+    sentence: "Wir ______ seit drei Jahören in Berlin.",
     translation: "We have been living in Berlin for three years.",
     verb: "wohnen",
     tense: "presente",
@@ -47,10 +47,10 @@ const allSentencesDe = [
   {
     sentence: "Sie ______ morgen früh nach Hamburg.",
     translation: "They are driving to Hamburg tomorrow morning.",
-    verb: "fahren",
+    verb: "fahören",
     tense: "presente",
     pronoun: "sie_Sie",
-    correct: "fahren"
+    correct: "fahören"
   },
   {
     sentence: "Ich ______ heute extrem müde.",
@@ -87,9 +87,9 @@ const allSentencesDe = [
 
   // --- Perfekt ---
   {
-    sentence: "Gestern ______ ich mit dem Zug nach Berlin gefahren.",
+    sentence: "Gestern ______ ich mit dem Zug nach Berlin gefahören.",
     translation: "Yesterday I traveled to Berlin by train.",
-    verb: "fahren",
+    verb: "fahören",
     tense: "passato_prossimo",
     pronoun: "ich",
     correct: "bin"
@@ -235,9 +235,9 @@ const allSentencesDe = [
 
   // --- Futur I ---
   {
-    sentence: "Morgen ______ ich nach Berlin mit dem Auto fahren.",
+    sentence: "Morgen ______ ich nach Berlin mit dem Auto fahören.",
     translation: "Tomorrow I will drive to Berlin by car.",
-    verb: "fahren",
+    verb: "fahören",
     tense: "futuro",
     pronoun: "ich",
     correct: "werde"

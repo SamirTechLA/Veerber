@@ -1150,18 +1150,28 @@ document.addEventListener("DOMContentLoaded", () => {
       this.quiz.isAnswered = true;
       input.disabled = true;
 
-      // Clean check (ignore punctuation/case)
-      const cleanUser = userText.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
-      const cleanCorrect = q.correctAnswer.toLowerCase();
+      // Clean check (ignore punctuation, case, whitespace)
+      const cleanUser = userText.toLowerCase().trim().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+      const cleanCorrect = q.correctAnswer.toLowerCase().trim().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+
+      let isCorrect = cleanUser === cleanCorrect;
 
       // Check slash variations (e.g. "stato/a")
-      let isCorrect = cleanUser === cleanCorrect;
       if (!isCorrect && cleanCorrect.includes("/")) {
         const parts = cleanCorrect.split("/");
         const base = parts[0].slice(0, -1);
         const opt1 = parts[0];
         const opt2 = base + parts[1];
-        if (cleanUser === opt1 || cleanUser === opt2) {
+        if (cleanUser === opt1 || cleanUser === opt2 || cleanUser === parts[0] || cleanUser === parts[1]) {
+          isCorrect = true;
+        }
+      }
+
+      // Flexible check for multi-word or auxiliary answers (e.g. "bin" vs "bin gefahren")
+      if (!isCorrect) {
+        const userWords = cleanUser.split(/\s+/);
+        const correctWords = cleanCorrect.split(/\s+/);
+        if (userWords[0] === correctWords[0] && userWords[0].length > 1) {
           isCorrect = true;
         }
       }
@@ -1623,34 +1633,52 @@ document.addEventListener("DOMContentLoaded", () => {
     async generateSentencesAI(apiKey, verbs, tenses) {
       const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`;
       
-      const langName = this.lang === "de" ? "German" : "Italian";
-      const exampleSentence = this.lang === "de" ? 'Heute ______ ich ein Buch.' : 'Oggi io ______ una mela.';
-      const exampleTranslation = this.lang === "de" ? 'Today I read a book.' : 'Today I eat an apple.';
-      const exampleVerb = this.lang === "de" ? 'lesen' : 'mangiare';
-      const exampleTense = this.lang === "de" ? 'presente' : 'presente';
-      const examplePronoun = this.lang === "de" ? 'ich' : 'io';
-      const exampleCorrect = this.lang === "de" ? 'lese' : 'mangio';
-      const pronounConstraint = this.lang === "de" 
-        ? "ich, du, er_sie_es, wir, ihr, sie_Sie" 
-        : "io, tu, lui_lei, noi, voi, loro";
+      const isDe = this.lang === "de";
+      const prompt = isDe 
+        ? `Generate a JSON list of exactly 5 German fill-in-the-blank sentences for language learning.
+Choose randomly from the following verbs: [${verbs.join(", ")}].
+Choose randomly from the following tenses: [${tenses.join(", ")}].
 
-      const prompt = `Generate a JSON list of exactly 5 ${langName} fill-in-the-blank sentences for language learning.
+GERMAN GRAMMAR RULES FOR SENTENCES:
+1. For 'presente' (Präsens) and 'imperfetto' (Präteritum): Put a single '______' placeholder where the conjugated verb belongs. 'correct' MUST be ONLY the single conjugated verb.
+   Example: {"sentence": "Heute ______ ich ein Buch.", "translation": "Today I read a book.", "verb": "lesen", "tense": "presente", "pronoun": "ich", "correct": "lese"}
+
+2. For 'passato_prossimo' (Perfekt): Put the '______' placeholder in position 2 for the auxiliary verb ('haben' or 'sein'). The past participle MUST be placed at the VERY END of the sentence. 'correct' MUST be ONLY the conjugated auxiliary verb ('habe', 'hast', 'hat', 'haben', 'habt', 'bin', 'bist', 'ist', 'sind', 'seid').
+   Example: {"sentence": "Gestern ______ ich nach Berlin gefahren.", "translation": "Yesterday I drove to Berlin.", "verb": "fahren", "tense": "passato_prossimo", "pronoun": "ich", "correct": "bin"}
+
+3. For 'futuro' (Futur I): Put the '______' placeholder in position 2 for the auxiliary verb 'werden'. The infinitive verb MUST be placed at the VERY END of the sentence. 'correct' MUST be ONLY the conjugated form of 'werden' ('werde', 'wirst', 'wird', 'werden', 'werdet').
+   Example: {"sentence": "Morgen ______ wir nach Berlin fahren.", "translation": "Tomorrow we will drive to Berlin.", "verb": "fahren", "tense": "futuro", "pronoun": "wir", "correct": "werden"}
+
+The pronouns allowed are: ich, du, er_sie_es, wir, ihr, sie_Sie.
+The tense keys MUST be exactly: presente, passato_prossimo, imperfetto, futuro.
+
+Respond ONLY with a valid JSON array of objects, containing no extra text or markdown formatting. Schema:
+[
+  {
+    "sentence": "Heute ______ ich ein Buch.",
+    "translation": "Today I read a book.",
+    "verb": "lesen",
+    "tense": "presente",
+    "pronoun": "ich",
+    "correct": "lese"
+  }
+]`
+        : `Generate a JSON list of exactly 5 Italian fill-in-the-blank sentences for language learning.
 Choose randomly from the following verbs: [${verbs.join(", ")}].
 Choose randomly from the following tenses: [${tenses.join(", ")}].
 For each sentence, create a single '______' placeholder representing the conjugated verb.
-The pronouns allowed are: ${pronounConstraint}.
+The pronouns allowed are: io, tu, lui_lei, noi, voi, loro.
 The tense keys MUST be exactly: presente, passato_prossimo, imperfetto, futuro.
-If the verb uses 'sein' in Perfekt (passato_prossimo) in German, or 'essere' in passato_prossimo in Italian, ensure the correct field has the appropriate auxiliary + past participle. 
-Ensure the correct field matches the pronoun and tense exactly.
-Respond ONLY with a valid JSON array of objects, containing no extra text or markdown formatting. The schema is:
+Ensure the 'correct' field matches the pronoun and tense exactly.
+Respond ONLY with a valid JSON array of objects, containing no extra text or markdown formatting. Schema:
 [
   {
-    "sentence": "${exampleSentence}",
-    "translation": "${exampleTranslation}",
-    "verb": "${exampleVerb}",
-    "tense": "${exampleTense}",
-    "pronoun": "${examplePronoun}",
-    "correct": "${exampleCorrect}"
+    "sentence": "Oggi io ______ una mela.",
+    "translation": "Today I eat an apple.",
+    "verb": "mangiare",
+    "tense": "presente",
+    "pronoun": "io",
+    "correct": "mangio"
   }
 ]`;
 
