@@ -1475,7 +1475,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
       this.flashcards.currentIndex++;
       if (this.flashcards.currentIndex < this.flashcards.cards.length) {
-        this.showFlashcard();
+        const cardEl = document.getElementById("flashcard-element");
+        if (cardEl && cardEl.classList.contains("flipped")) {
+          cardEl.classList.remove("flipped");
+          this.flashcards.flipped = false;
+          setTimeout(() => {
+            this.showFlashcard();
+          }, 250);
+        } else {
+          this.showFlashcard();
+        }
       } else {
         this.endFlashcardSession();
       }
