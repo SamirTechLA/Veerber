@@ -1806,17 +1806,17 @@ Respond ONLY with a valid JSON array of objects, containing no extra text or mar
 
       if (isCorrect) {
         const correctPraise = isDe
-          ? ['🎉 Fantastisch!', '🌟 Ausgezeichnet!', '🔥 Wunderbar!', '🏆 Hervorragend!', '⚡ Super gemacht!']
+          ? ["🎉 Fantastisch!", "🌟 Ausgezeichnet!", "🔥 Wunderbar!", "🏆 Hervorragend!", "⚡ Super gemacht!"]
           : (isIt
-            ? ['🎉 Fantastico!', '🌟 Perfetto!', '🔥 Grandioso!', '🏆 Bravissimo!', '⚡ Eccellente!']
-            : ['🎉 Fantastic!', '🌟 Excellent!', '🔥 Spot on!', '🏆 Brilliant!', '⚡ Superb!']);
+            ? ["🎉 Fantastico!", "🌟 Perfetto!", "🔥 Grandioso!", "🏆 Bravissimo!", "⚡ Eccellente!"]
+            : ["🎉 Fantastic!", "🌟 Excellent!", "🔥 Spot on!", "🏆 Brilliant!", "⚡ Superb!"]);
         return correctPraise[Math.floor(Math.random() * correctPraise.length)];
       } else {
         const wrongMotivate = isDe
-          ? ['💔 Nicht aufgeben!', '💡 Übung macht den Meister!', '🌱 Aus Fehlern lernt man!', '💪 Beim nächsten Mal klappt's!']
+          ? ["💔 Nicht aufgeben!", "💡 Übung macht den Meister!", "🌱 Aus Fehlern lernt man!", "💪 Beim nächsten Mal klappt's!"]
           : (isIt
-            ? ['💔 Non ti arrendere!', '💡 Sbagliando s'impara!', '🌱 Ogni errore ti fa crescere!', '💪 Ci riuscirai la prossima volta!']
-            : ['💔 Don't give up!', '💡 Practice makes perfect!', '🌱 Every mistake is progress!', '💪 You'll get it next time!']);
+            ? ["💔 Non ti arrendere!", "💡 Sbagliando s'impara!", "🌱 Ogni errore ti fa crescere!", "💪 Ci riuscirai la prossima volta!"]
+            : ["💔 Don't give up!", "💡 Practice makes perfect!", "🌱 Every mistake is progress!", "💪 You'll get it next time!"]);
         return wrongMotivate[Math.floor(Math.random() * wrongMotivate.length)];
       }
     },
