@@ -1224,10 +1224,12 @@ document.addEventListener("DOMContentLoaded", () => {
       if (isCorrect) {
         this.quiz.correctCount++;
         AudioManager.playSuccess();
-        ParticlesEngine.burstConfetti();
+        if (window.Confetti) {
+          Confetti.spawn(window.innerWidth / 2, window.innerHeight * 0.35, 60);
+        }
 
         feedback.className = "drill-feedback visible correct";
-        headline.innerHTML = this.t("feedback_correct_headline");
+        headline.innerHTML = this.getMotivationalMessage(true);
         details.innerHTML = `+${xpGained} XP!`;
         this.spawnFloatyXP(`+${xpGained} XP`);
 
@@ -1240,8 +1242,12 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         AudioManager.playFailure();
         feedback.className = "drill-feedback visible wrong";
-        headline.innerHTML = this.t("feedback_wrong_headline");
-        details.innerHTML = this.t("feedback_correct_details").replace("{answer}", q.correctAnswer);
+        headline.innerHTML = this.getMotivationalMessage(false);
+        const tipText = this.uiLang === "de" 
+          ? "Keine Sorge! Weiter geht's 💪" 
+          : (this.uiLang === "it" ? "Nessun problema! Continua così 💪" : "Don't worry, keep going! 💪");
+        
+        details.innerHTML = `${this.t("feedback_correct_details").replace("{answer}", q.correctAnswer)} <br><span class="motivate-badge"><i class="fa-solid fa-lightbulb"></i> ${tipText}</span>`;
       }
 
       if (leveledUp) {
@@ -1461,9 +1467,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (isSuccess) {
         AudioManager.playSuccess();
+        if (window.Confetti) {
+          Confetti.spawn(window.innerWidth / 2, window.innerHeight * 0.35, 35);
+        }
         this.spawnFloatyXP(`+${xpGained} XP`);
       } else {
         AudioManager.playFailure();
+        const motivateMsg = this.uiLang === "de" ? "Übung macht den Meister! 💪" : (this.uiLang === "it" ? "Sbagliando s'impara! 💪" : "Practice makes perfect! 💪");
+        this.spawnFloatyXP(motivateMsg);
       }
 
       if (leveledUp) {
@@ -1785,6 +1796,28 @@ Respond ONLY with a valid JSON array of objects, containing no extra text or mar
         });
       } catch (e) {
         console.log("Could not save API key to server file, key will remain local to this browser.", e);
+      }
+    },
+
+
+    getMotivationalMessage(isCorrect) {
+      const isDe = this.uiLang === "de";
+      const isIt = this.uiLang === "it";
+
+      if (isCorrect) {
+        const correctPraise = isDe
+          ? ['🎉 Fantastisch!', '🌟 Ausgezeichnet!', '🔥 Wunderbar!', '🏆 Hervorragend!', '⚡ Super gemacht!']
+          : (isIt
+            ? ['🎉 Fantastico!', '🌟 Perfetto!', '🔥 Grandioso!', '🏆 Bravissimo!', '⚡ Eccellente!']
+            : ['🎉 Fantastic!', '🌟 Excellent!', '🔥 Spot on!', '🏆 Brilliant!', '⚡ Superb!']);
+        return correctPraise[Math.floor(Math.random() * correctPraise.length)];
+      } else {
+        const wrongMotivate = isDe
+          ? ['💔 Nicht aufgeben!', '💡 Übung macht den Meister!', '🌱 Aus Fehlern lernt man!', '💪 Beim nächsten Mal klappt's!']
+          : (isIt
+            ? ['💔 Non ti arrendere!', '💡 Sbagliando s'impara!', '🌱 Ogni errore ti fa crescere!', '💪 Ci riuscirai la prossima volta!']
+            : ['💔 Don't give up!', '💡 Practice makes perfect!', '🌱 Every mistake is progress!', '💪 You'll get it next time!']);
+        return wrongMotivate[Math.floor(Math.random() * wrongMotivate.length)];
       }
     },
 
